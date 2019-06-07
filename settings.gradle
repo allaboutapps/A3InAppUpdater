@@ -1,0 +1,2 @@
+include ':app', ':inappupdater'
+rootProject.name='A3InAppUpdater'
