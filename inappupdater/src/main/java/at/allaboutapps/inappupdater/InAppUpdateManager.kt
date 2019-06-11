@@ -15,13 +15,13 @@ import io.reactivex.Observable
  * Usage:
  * TBD
  */
-class InAppUpdateManager(val activity: Activity) {
+class InAppUpdateManager(private val activity: Activity) {
 
     companion object {
         const val REQUEST_CODE_IN_APP_UPDATE = 1230
     }
 
-    var updateType = AppUpdateType.FLEXIBLE
+    private var updateType = AppUpdateType.FLEXIBLE
 
     private val appUpdateManager: AppUpdateManager = AppUpdateManagerFactory.create(activity)
 
@@ -82,6 +82,15 @@ class InAppUpdateManager(val activity: Activity) {
      */
     fun completeUpdate() {
         appUpdateManager.completeUpdate()
+    }
+
+
+    fun setFlexibleUpdate() {
+        updateType = AppUpdateType.FLEXIBLE
+    }
+
+    fun setImmediateUpdate() {
+        updateType = AppUpdateType.IMMEDIATE
     }
 
 }
