@@ -2,12 +2,17 @@
 
 ![all about apps](https://www.allaboutapps.at/wp-content/uploads/2017/06/aaa-Logo-black-646x165.png "all about apps")
 
-###### Looking for a job as android developer located in vienna? Just contact us
+###### Looking for a job as android developer located in vienna? [Just contact us](https://www.allaboutapps.at/jobs/android-app-entwickler/)
 
 
 This library aims to simplify Android [In App Updates](https://developer.android.com/guide/app-bundle/in-app-updates). You can force your users to update to latest app version with just a few lines of code. 
 
-##Usage
+### DEMO VIDEOS
+[(YOUTUBE) Demo type FLEXIBLE](https://youtu.be/c4IGhj5E7eI)
+
+[(YOUTUBE) Demo type IMMEDIATE](https://youtu.be/mr5SGbXs3ec)
+
+# Usage
 
 ## Initialize the InAppUpdateManager
 ```Kotlin
