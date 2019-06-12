@@ -1,0 +1,30 @@
+language: android
+jdk: oraclejdk8
+android:
+  components:
+    - build-tools-28.0.3
+    - android-28
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+install: true
+before_script:
+  - touch local.properties
+script: "./gradlew build"
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - "$HOME/.gradle/caches/"
+    - "$HOME/.gradle/wrapper/"
+    - "$HOME/.android/build-cache"
+deploy:
+  skip_cleanup: true
+  provider: script
+  script: "./gradlew bintrayUpload"
+  on:
+    tags: true
+env:
+  global:
+    secure: fBJ6f9l32u/dIodgYysCsKAqmmV/ZN0WQ8c4Fo/dSaJhx2yZkmg5CgIzKdRjNi+obpWavscoi2TCEzdUhBcb1tmiODTA8K3WL/vfFeFwh90fOiZoaQMFwTMkq1u1AIdv8JwAusGO42A9MYIurDd1zOCdLlQPGG56p+7+vTxbYpR1EkSgSq68XV+Zpb7+zZo3Ejlt2WEzd4ujWDfrLVV0ybfnHB6yPjrp6DjYmfexwv5mrAkuTZnZuA7a7j7TKCArAE/H6bFvn9Y810Iv/WWZbyyP0eCCexEMYm4nIhyTVyjuUEMqnl8U1Mt1A1P+JYT7SlpyyYG6iiHZRPUNvpm9KAfoiuWPl9CxW7Qf5/xvFOUcVhmQ7CeB4vDxM3jRmcYHYGIh3akSAfs+bmhGXLk2Py3sIT2UeUXmYeepS1JB8YwzItg2/qkelS/OJlPmIeYCXcfHueP3OK/p7oXtvm/F/SgYWAikYRNWHp3ZoJ5dtTkm6jQ7m7MrOSnQOhCGR6kyF7TjjlI0VZiozvKFycZhlnW2rS+jvMlIuRZtso6Vmvuz/ZRmIQryY0DLrNIznilb9fSCD4tpgOJAAekB3lbt38Kx9+sofuoOQ8yMYXDiRVlp2pTxLXUShZZjLGyLQM60tam7fE2LoT4AUyjq1Vgy1Xdcu4tZk5oLEznJbbFz1Xg=
