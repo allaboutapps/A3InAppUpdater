@@ -56,33 +56,33 @@ bintray {
     configurations = ['archives']
 }
 
-task javadoc(type: Javadoc) {
-    excludes = ['**/*.kt'] // Exclude all kotlin files from javadoc file.
-}
+//task javadoc(type: Javadoc) {
+//    excludes = ['**/*.kt'] // Exclude all kotlin files from javadoc file.
+//}
+//
+//dokka {
+//    outputFormat = 'javadoc'
+//    outputDirectory = javadoc.destinationDir
+//}
 
-dokka {
-    outputFormat = 'javadoc'
-    outputDirectory = javadoc.destinationDir
-}
-
-task generateJavadocsJar(type: Jar, dependsOn: dokka) {
-    classifier = 'javadoc'
-    from dokka.outputDirectory
-}
+//task generateJavadocsJar(type: Jar, dependsOn: dokka) {
+//    classifier = 'javadoc'
+//    from dokka.outputDirectory
+//}
 
 task generateSourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier 'sources'
 }
 
-task generateJavadocs(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath()
-            .join(File.pathSeparator))
-}
+//task generateJavadocs(type: Javadoc) {
+//    source = android.sourceSets.main.java.srcDirs
+//    classpath += project.files(android.getBootClasspath()
+//            .join(File.pathSeparator))
+//}
 
 artifacts {
-    archives generateSourcesJar, generateJavadocsJar
+    archives generateSourcesJar //, generateJavadocsJar
 }
 
 android {
