@@ -2,6 +2,7 @@ plugins {
     id "com.jfrog.bintray" version "1.7.3"
     id "com.github.dcendents.android-maven" version "2.1"
 }
+apply plugin: 'org.jetbrains.dokka-android'
 
 group = 'at.allaboutapps.inappupdater'
 version = '0.9.6'
@@ -11,7 +12,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
-
 
     defaultConfig {
         minSdkVersion 16
@@ -56,13 +56,13 @@ bintray {
     configurations = ['archives']
 }
 
-artifacts {
-    archives generateSourcesJar, generateJavadocsJar
+task javadoc(type: Javadoc) {
+    excludes = ['**/*.kt'] // Exclude all kotlin files from javadoc file.
 }
 
-task generateSourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier 'sources'
+dokka {
+    outputFormat = 'javadoc'
+    outputDirectory = javadoc.destinationDir
 }
 
 task generateJavadocsJar(type: Jar, dependsOn: dokka) {
@@ -70,10 +70,25 @@ task generateJavadocsJar(type: Jar, dependsOn: dokka) {
     from dokka.outputDirectory
 }
 
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
 task generateJavadocs(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath()
             .join(File.pathSeparator))
+}
+
+artifacts {
+    archives generateSourcesJar, generateJavadocsJar
+}
+
+android {
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
