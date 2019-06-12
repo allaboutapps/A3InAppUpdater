@@ -19,6 +19,10 @@ android {
         versionCode 1
         versionName "1.0"
 
+        // the name of the artifact
+        archivesBaseName = 'a3inappupdater' // e.g. a3webview
+
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
     }
@@ -30,6 +34,26 @@ android {
         }
     }
 
+}
+
+bintray {
+    user = 'allaboutapps'
+    // read pw from secure travis.yml
+    key = System.getenv('BINTRAY_KEY')
+    pkg {
+        repo = 'A3-Android'
+
+        version {
+            name = project.version
+            desc = ''
+            vcsTag = System.getenv('TRAVIS_TAG')
+        }
+
+        licenses = ['MIT']
+        vcsUrl = 'https://github.com/allaboutapps/InAppUpdater'
+        websiteUrl = 'http://www.allaboutapps.at'
+    }
+    configurations = ['archives']
 }
 
 dependencies {
