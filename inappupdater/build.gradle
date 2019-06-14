@@ -1,5 +1,5 @@
 plugins {
-    id "com.jfrog.bintray" version "1.7.3"
+    id "com.jfrog.bintray" version "1.8.1"
     id 'digital.wup.android-maven-publish' version '3.6.2'
 }
 
@@ -47,6 +47,7 @@ bintray {
     println key
     pkg {
         repo = 'A3-Android'
+        name = "$project.group.$archivesBaseName"
 
         version {
             name = project.version
