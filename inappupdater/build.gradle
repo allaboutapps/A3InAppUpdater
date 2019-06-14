@@ -1,8 +1,8 @@
 plugins {
     id "com.jfrog.bintray" version "1.7.3"
-    id "com.github.dcendents.android-maven" version "2.1"
+    id 'digital.wup.android-maven-publish' version '3.6.2'
 }
-apply plugin: 'org.jetbrains.dokka-android'
+
 
 group = 'at.allaboutapps.inappupdater'
 version = '0.9.6'
@@ -10,6 +10,8 @@ version = '0.9.6'
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'org.jetbrains.dokka-android'
+
 android {
     compileSdkVersion 28
 
@@ -56,16 +58,23 @@ bintray {
     configurations = ['archives']
 }
 
+publishing {
+    publications {
+        mavenAar(MavenPublication) {
+            from components.android
+        }
+    }
+}
 //task javadoc(type: Javadoc) {
 //    excludes = ['**/*.kt'] // Exclude all kotlin files from javadoc file.
 //}
-//
+
 //dokka {
 //    outputFormat = 'javadoc'
 //    outputDirectory = javadoc.destinationDir
 //}
 
-//task generateJavadocsJar(type: Jar, dependsOn: dokka) {
+//destinationDirtask generateJavadocsJar(type: Jar, dependsOn: dokka) {
 //    classifier = 'javadoc'
 //    from dokka.outputDirectory
 //}
@@ -105,3 +114,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
 }
+
+
+apply plugin: 'digital.wup.android-maven-publish'
