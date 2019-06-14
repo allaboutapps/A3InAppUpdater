@@ -37,9 +37,9 @@ There are two modes
 * Immediate - User will be blocked until download and installation is finished, restart is triggered automatically
 
 
-#### Set update to immediate mode
+#### Start the update process
 ```Kotlin
-    inAppUpdateManager.setImmediateUpdate()
+    inAppUpdateManager.startUpdate(updateType)
 ```
 
 

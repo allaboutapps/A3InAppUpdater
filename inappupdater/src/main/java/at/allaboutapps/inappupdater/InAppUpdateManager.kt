@@ -1,13 +1,16 @@
 package at.allaboutapps.inappupdater
 
 import android.app.Activity
+import androidx.annotation.IntDef
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.InstallState
 import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import io.reactivex.Observable
+import io.reactivex.disposables.Disposables
 
 /**
  * InAppUpdateManager handles the in app update process
@@ -19,13 +22,13 @@ class InAppUpdateManager(private val activity: Activity) {
 
     companion object {
         const val REQUEST_CODE_IN_APP_UPDATE = 1230
+        const val UPDATE_TYPE_FLEXIBLE = AppUpdateType.FLEXIBLE
+        const val UPDATE_TYPE_IMMEDIATE = AppUpdateType.IMMEDIATE
     }
-
-    private var updateType = AppUpdateType.FLEXIBLE
 
     private val appUpdateManager: AppUpdateManager = AppUpdateManagerFactory.create(activity)
 
-    private val currentInAppUpdateStatus = InAppUpdateStatus()
+    private var currentInAppUpdateStatus = InAppUpdateStatus()
 
     /**
      * Observe the status of an in app update process
@@ -37,36 +40,52 @@ class InAppUpdateManager(private val activity: Activity) {
 
             val updateStateListener = InstallStateUpdatedListener { state ->
                 if (currentInAppUpdateStatus.appUpdateState?.installStatus() != state.installStatus()) {
-                    currentInAppUpdateStatus.appUpdateState = state
+                    currentInAppUpdateStatus = currentInAppUpdateStatus.copy(appUpdateState = state)
                     emitter.onNext(currentInAppUpdateStatus)
+
+                    if (state.installStatus() == InstallStatus.DOWNLOADED) {
+                        emitter.onComplete()
+                    }
                 }
             }
-
-            appUpdateManager.unregisterListener(updateStateListener)
+            // register listener
             appUpdateManager.registerListener(updateStateListener)
 
-            appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
-                currentInAppUpdateStatus.appUpdateInfo = appUpdateInfo
+            // unregister listener on dispose
+            emitter.setDisposable(Disposables.fromAction { appUpdateManager.unregisterListener(updateStateListener) })
 
+
+            appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
+                currentInAppUpdateStatus = currentInAppUpdateStatus.copy(appUpdateInfo = appUpdateInfo)
+
+                // if there already is an update progress in progress we just setup it to resume
                 if (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
                     //set state if app gets reopened with an update in progress
-                    currentInAppUpdateStatus.appUpdateState =
-                        InstallState(appUpdateInfo.installStatus(), 0, activity.packageName)
+                    currentInAppUpdateStatus = currentInAppUpdateStatus.copy(
+                        appUpdateState = InstallState(
+                            appUpdateInfo.installStatus(),
+                            0,
+                            activity.packageName
+                        )
+                    )
                 }
                 emitter.onNext(currentInAppUpdateStatus)
             }
         }
     }
 
+
     /**
      * Starts an in app update process
+     *
+     * @param updateType set the type of the in app update
      */
-    fun startUpdate() {
+    fun startUpdate(@InAppUpdateType updateType: Int = AppUpdateType.FLEXIBLE) {
         //to be save
         //refetch the update status before starting the update process
         appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
 
-            currentInAppUpdateStatus.appUpdateInfo = appUpdateInfo
+            currentInAppUpdateStatus = currentInAppUpdateStatus.copy(appUpdateInfo = appUpdateInfo)
 
             appUpdateManager.startUpdateFlowForResult(
                 currentInAppUpdateStatus.appUpdateInfo,
@@ -85,12 +104,7 @@ class InAppUpdateManager(private val activity: Activity) {
     }
 
 
-    fun setFlexibleUpdate() {
-        updateType = AppUpdateType.FLEXIBLE
-    }
-
-    fun setImmediateUpdate() {
-        updateType = AppUpdateType.IMMEDIATE
-    }
-
+    @Retention(AnnotationRetention.SOURCE)
+    @IntDef(UPDATE_TYPE_FLEXIBLE, UPDATE_TYPE_IMMEDIATE)
+    annotation class InAppUpdateType
 }

@@ -3,9 +3,10 @@ package at.allaboutapps.inappupdaterdemo
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import at.allaboutapps.inappupdater.InAppUpdateManager
+import at.allaboutapps.inappupdater.InAppUpdateStatus
 import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.activity_main.*
-import at.allaboutapps.inappupdater.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,23 +20,20 @@ class MainActivity : AppCompatActivity() {
         tvPackageName.text = packageName
         tvCurrentVersionCode.text = BuildConfig.VERSION_CODE.toString()
 
-
         initInAppUpdate()
 
         btUpdate.setOnClickListener {
-
-
-            if (updateTypeGroup.checkedButtonId == R.id.btImmediate) {
-                inAppUpdateManager.setImmediateUpdate()
-            } else {
-                inAppUpdateManager.setFlexibleUpdate()
-            }
-            inAppUpdateManager.startUpdate()
+            inAppUpdateManager.startUpdate(getSelectedUpdateType())
         }
+
         btRestart.setOnClickListener {
             inAppUpdateManager.completeUpdate()
         }
     }
+
+    @InAppUpdateManager.InAppUpdateType
+    private fun getSelectedUpdateType() =
+        if (updateTypeGroup.checkedButtonId == R.id.btImmediate) InAppUpdateManager.UPDATE_TYPE_IMMEDIATE else InAppUpdateManager.UPDATE_TYPE_FLEXIBLE
 
     private fun initInAppUpdate() {
         inAppUpdateManager = InAppUpdateManager(this)
