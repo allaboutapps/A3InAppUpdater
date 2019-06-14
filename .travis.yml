@@ -24,7 +24,7 @@ deploy:
   provider: script
   script: "./gradlew bintrayUpload"
   on:
-    tags: true
+    tags: false
 env:
   global:
     secure: NPXqAvwpExPLezEWMUOWeorI0G06vQMmAdQ/+wrPFAq89ujebt7ZVWrUfTGxrLc66Ja3uLikgC+UHSP6ZcbSUUutKMmCp8DAR5dyc/oP2+z2OQhVfx81s1MP42viUyEDnH/9Ydw7X/x/eHY/FILujED6pVCUJyLA2zDeeToHv4fNcCDjDuSVjof3Cc1Y8WJCNWAX3Y/DD4Y99qn+IPrWBp+BBGR2ooDhypp6tnVdlaJ4t0q5i9fNEBa7YXskTWKiHyekwy1Ljj6ih/W/uyX7yGZLjCnbZ2wDzKK+XK83EsNoCDKZSO7kUMBRgXwy6iseDcvaTLitHnOLHQKulgBkyLYp5gTKP/FMs1fyg+sk5ultoOyboF9PQvWursy7sTGn+WVTOp2MbN8UeV41m4iyOX0QRcMRHH5zErO8H/jD861pJPf7HS7UBXfyzPRQT313w80uFLhXPcEcGxR6m6QKXbw4HIWuqtR4QjGk0ED0lD/d67GzUj84zutBTmm53uknufBShvWI+9HPHVFX7/YAgtdFGH0+kIXiLI0G2/6IGeTCP9RzWsl6ET79evpkM3RTFPT9NhHvarRPb1AYkCzim3G0O80eZMmAT80i3eVw1Ncdw54sP6JZk9wRftKLdnGWxUeqoMefAAvEJnTFFLlQ5xVlnJAFgccgUjelih0/HM8=

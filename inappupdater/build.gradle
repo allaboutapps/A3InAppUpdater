@@ -5,7 +5,7 @@ plugins {
 
 
 group = 'at.allaboutapps.inappupdater'
-version = '0.9.6'
+version = '0.9.8'
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
@@ -35,22 +35,27 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 bintray {
+    println 'Start bintray upload'
     user = 'allaboutapps'
     // read pw from secure travis.yml
     key = System.getenv('BINTRAY_KEY')
+
+    println user
+    println key
     pkg {
         repo = 'A3-Android'
 
         version {
             name = project.version
             desc = ''
+            released = new Date()
             vcsTag = System.getenv('TRAVIS_TAG')
         }
-
+        dryRun = true
+        publish = false
         licenses = ['MIT']
         vcsUrl = 'https://github.com/allaboutapps/InAppUpdater'
         websiteUrl = 'http://www.allaboutapps.at'
