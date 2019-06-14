@@ -5,7 +5,7 @@ plugins {
 
 
 group = 'at.allaboutapps.inappupdater'
-version = '0.9.8'
+version = '1.0.0'
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
@@ -71,33 +71,33 @@ publishing {
         }
     }
 }
-//task javadoc(type: Javadoc) {
-//    excludes = ['**/*.kt'] // Exclude all kotlin files from javadoc file.
-//}
+task javadoc(type: Javadoc) {
+    excludes = ['**/*.kt'] // Exclude all kotlin files from javadoc file.
+}
 
-//dokka {
-//    outputFormat = 'javadoc'
-//    outputDirectory = javadoc.destinationDir
-//}
+dokka {
+    outputFormat = 'html'
+    outputDirectory = javadoc.destinationDir
+}
 
-//destinationDirtask generateJavadocsJar(type: Jar, dependsOn: dokka) {
-//    classifier = 'javadoc'
-//    from dokka.outputDirectory
-//}
+task generateJavadocsJar(type: Jar, dependsOn: dokka) {
+    classifier = 'javadoc'
+    from dokka.outputDirectory
+}
 
 task generateSourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier 'sources'
 }
 
-//task generateJavadocs(type: Javadoc) {
-//    source = android.sourceSets.main.java.srcDirs
-//    classpath += project.files(android.getBootClasspath()
-//            .join(File.pathSeparator))
-//}
+task generateJavadocs(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath()
+            .join(File.pathSeparator))
+}
 
 artifacts {
-    archives generateSourcesJar //, generateJavadocsJar
+    archives generateSourcesJar, generateJavadocsJar
 }
 
 android {
