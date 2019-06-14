@@ -5,7 +5,7 @@ plugins {
 
 
 group = 'at.allaboutapps.inappupdater'
-version = '1.0.3'
+version = '1.0.4'
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
@@ -67,8 +67,6 @@ publishing {
     publications {
         mavenAar(MavenPublication) {
             from components.android
-        }
-        mavenJava(MavenPublication) {
             pom {
                 name = 'InAppUpdater'
                 description = 'Android library to simplify In App Update process'
@@ -87,7 +85,6 @@ publishing {
                     }
                 }
             }
-
         }
     }
 }
