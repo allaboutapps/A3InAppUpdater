@@ -1,5 +1,9 @@
 # A3InAppUpdater
 
+[![Build Status](https://travis-ci.org/allaboutapps/InAppUpdater.svg?branch=master)](https://travis-ci.org/allaboutapps/InAppUpdater)
+[ ![Download](https://api.bintray.com/packages/allaboutapps/A3-Android/at.allaboutapps.inappupdater.a3inappupdater/images/download.svg) ](https://bintray.com/allaboutapps/A3-Android/at.allaboutapps.inappupdater.a3inappupdater/_latestVersion)
+
+
 ![all about apps](https://www.allaboutapps.at/wp-content/uploads/2017/06/aaa-Logo-black-646x165.png "all about apps")
 
 ###### Looking for a job as android developer located in vienna? [Just contact us](https://www.allaboutapps.at/jobs/android-app-entwickler/)
@@ -13,6 +17,13 @@ This library aims to simplify Android [In App Updates](https://developer.android
 [(YOUTUBE) Demo type IMMEDIATE](https://youtu.be/mr5SGbXs3ec)
 
 # Usage
+
+
+## Add to project
+
+```Gradle
+    implementation 'at.allaboutapps.inappupdater:inappupdater:1.0.6'
+```
 
 ## Initialize the InAppUpdateManager
 ```Kotlin
