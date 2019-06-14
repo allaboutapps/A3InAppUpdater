@@ -5,7 +5,7 @@ plugins {
 
 
 group = 'at.allaboutapps.inappupdater'
-version = '1.0.5'
+version = '1.0.6'
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
@@ -53,7 +53,7 @@ bintray {
             released = new Date()
             vcsTag = System.getenv('TRAVIS_TAG')
         }
-        dryRun = true
+        dryRun = false
         publish = true
         licenses = ['MIT']
         vcsUrl = 'https://github.com/allaboutapps/InAppUpdater'
