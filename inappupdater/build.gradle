@@ -5,7 +5,7 @@ plugins {
 
 
 group = 'at.allaboutapps.inappupdater'
-version = '1.0.4'
+version = '1.0.5'
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
@@ -38,10 +38,9 @@ android {
 }
 
 bintray {
-    println 'Start bintray upload'
     user = 'allaboutapps'
     // read pw from secure travis.yml
-    key = "4c550d0db2d9dcb397a218e330bce6409ca9a28f" //System.getenv('BINTRAY_KEY')
+    key = System.getenv('BINTRAY_KEY')
 
     pkg {
         repo = 'A3-Android'
@@ -54,13 +53,13 @@ bintray {
             released = new Date()
             vcsTag = System.getenv('TRAVIS_TAG')
         }
-        dryRun = false
+        dryRun = true
         publish = true
         licenses = ['MIT']
         vcsUrl = 'https://github.com/allaboutapps/InAppUpdater'
         websiteUrl = 'http://www.allaboutapps.at'
     }
-    configurations = ['archives']
+    publications = ['mavenAar']
 }
 
 publishing {
