@@ -68,6 +68,27 @@ publishing {
         mavenAar(MavenPublication) {
             from components.android
         }
+        mavenJava(MavenPublication) {
+            pom {
+                name = 'InAppUpdater'
+                description = 'Android library to simplify In App Update process'
+                url = 'https://github.com/allaboutapps/InAppUpdater'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'http://www.opensource.org/licenses/mit-license.php'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'MAG'
+                        name = 'Markus Gursch'
+                        email = 'markus.gursch@allaboutapps.at'
+                    }
+                }
+            }
+
+        }
     }
 }
 task javadoc(type: Javadoc) {
