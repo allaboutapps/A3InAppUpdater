@@ -77,6 +77,15 @@ Just provide to the InAppUpdateManager a second, optional parameter
     inAppUpdateManager = InAppUpdateManager(this, DemoForceUpdateProvider())
 ```
 
+The force update activity screen provided by Google Play Core library can be closed through the back button. So we need to override onActivityResult to force the update again
+```Kotlin
+      override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        inAppUpdateManager.onActivityResult(requestCode, resultCode)
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+```
+
+
 ### How to setup the demo app
 
 In App Updates needs a newer version of the app available in Play Store.
