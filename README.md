@@ -11,7 +11,12 @@
 
 This library aims to simplify Android [In App Updates](https://developer.android.com/guide/app-bundle/in-app-updates). You can force your users to update to latest app version with just a few lines of code. 
 
+
+
 ### DEMO VIDEOS
+
+![Flexible update](assets/flexible_update.gif)
+
 [(YOUTUBE) Demo type FLEXIBLE](https://youtu.be/c4IGhj5E7eI)
 
 [(YOUTUBE) Demo type IMMEDIATE](https://youtu.be/mr5SGbXs3ec)
