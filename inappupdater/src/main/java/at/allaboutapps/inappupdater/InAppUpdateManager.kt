@@ -18,7 +18,7 @@ import io.reactivex.disposables.Disposables
  * Usage:
  * TBD
  */
-class InAppUpdateManager(private val activity: Activity) {
+class InAppUpdateManager(private val activity: Activity, private val forceUpdateProvider: ForceUpdateProvider? = null) {
 
     companion object {
         const val REQUEST_CODE_IN_APP_UPDATE = 1230
@@ -37,6 +37,7 @@ class InAppUpdateManager(private val activity: Activity) {
      */
     fun observeInAppUpdateStatus(): Observable<InAppUpdateStatus> {
         return Observable.create { emitter ->
+
 
             val updateStateListener = InstallStateUpdatedListener { state ->
                 if (currentInAppUpdateStatus.appUpdateState?.installStatus() != state.installStatus()) {
@@ -58,6 +59,11 @@ class InAppUpdateManager(private val activity: Activity) {
             appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
                 currentInAppUpdateStatus = currentInAppUpdateStatus.copy(appUpdateInfo = appUpdateInfo)
 
+                // handle a forced update
+                forceUpdateProvider?.requestUpdateShouldBeImmediate(currentInAppUpdateStatus.availableVersionCode) {
+                    startUpdate(UPDATE_TYPE_IMMEDIATE)
+                }
+
                 // if there already is an update progress in progress we just setup it to resume
                 if (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
                     //set state if app gets reopened with an update in progress
@@ -71,6 +77,8 @@ class InAppUpdateManager(private val activity: Activity) {
                 }
                 emitter.onNext(currentInAppUpdateStatus)
             }
+
+
         }
     }
 
@@ -103,6 +111,11 @@ class InAppUpdateManager(private val activity: Activity) {
         appUpdateManager.completeUpdate()
     }
 
+    fun onActivityResult(requestCode: Int, resultCode: Int) {
+        if (requestCode == REQUEST_CODE_IN_APP_UPDATE && resultCode == Activity.RESULT_CANCELED) {
+            startUpdate(UPDATE_TYPE_IMMEDIATE)
+        }
+    }
 
     @Retention(AnnotationRetention.SOURCE)
     @IntDef(UPDATE_TYPE_FLEXIBLE, UPDATE_TYPE_IMMEDIATE)
