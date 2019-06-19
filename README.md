@@ -15,7 +15,7 @@ This library aims to simplify Android [In App Updates](https://developer.android
 
 ### DEMO VIDEOS
 
-![Flexible update| width=20](assets/flexible_update.gif)
+![Flexible update](assets/flexible_update_small.gif)
 
 [(YOUTUBE) Demo type FLEXIBLE](https://youtu.be/c4IGhj5E7eI)
 
