@@ -9,8 +9,8 @@ android {
         applicationId "at.allaboutapps.inappupdater.demo"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 1
-        versionName "V1.0.0"
+        versionCode 3
+        versionName "V1.0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
