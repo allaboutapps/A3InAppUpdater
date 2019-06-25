@@ -11,7 +11,8 @@
 
 This library aims to simplify Android [In App Updates](https://developer.android.com/guide/app-bundle/in-app-updates). You can force your users to update to latest app version with just a few lines of code. 
 
-
+### BLOG POST
+Visit [https://code.allaboutapps.at/articles/android-in-app-updates/](https://code.allaboutapps.at/articles/android-in-app-updates/) to get some detailed informations about this library
 
 ### DEMO VIDEOS
 
