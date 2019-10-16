@@ -18,7 +18,10 @@ import io.reactivex.disposables.Disposables
  * Usage:
  * TBD
  */
-class InAppUpdateManager(private val activity: Activity, private val forceUpdateProvider: ForceUpdateProvider? = null) {
+class InAppUpdateManager(
+    private val activity: Activity,
+    private val forceUpdateProvider: ForceUpdateProvider? = null
+) {
 
     companion object {
         const val REQUEST_CODE_IN_APP_UPDATE = 1230
@@ -37,8 +40,6 @@ class InAppUpdateManager(private val activity: Activity, private val forceUpdate
      */
     fun observeInAppUpdateStatus(): Observable<InAppUpdateStatus> {
         return Observable.create { emitter ->
-
-
             val updateStateListener = InstallStateUpdatedListener { state ->
                 if (currentInAppUpdateStatus.appUpdateState?.installStatus() != state.installStatus()) {
                     currentInAppUpdateStatus = currentInAppUpdateStatus.copy(appUpdateState = state)
@@ -49,15 +50,20 @@ class InAppUpdateManager(private val activity: Activity, private val forceUpdate
                     }
                 }
             }
+
             // register listener
             appUpdateManager.registerListener(updateStateListener)
 
             // unregister listener on dispose
-            emitter.setDisposable(Disposables.fromAction { appUpdateManager.unregisterListener(updateStateListener) })
-
+            emitter.setDisposable(Disposables.fromAction {
+                appUpdateManager.unregisterListener(
+                    updateStateListener
+                )
+            })
 
             appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
-                currentInAppUpdateStatus = currentInAppUpdateStatus.copy(appUpdateInfo = appUpdateInfo)
+                currentInAppUpdateStatus =
+                    currentInAppUpdateStatus.copy(appUpdateInfo = appUpdateInfo)
 
                 // handle a forced update
                 forceUpdateProvider?.requestUpdateShouldBeImmediate(currentInAppUpdateStatus.availableVersionCode) {
@@ -68,7 +74,7 @@ class InAppUpdateManager(private val activity: Activity, private val forceUpdate
                 if (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
                     //set state if app gets reopened with an update in progress
                     currentInAppUpdateStatus = currentInAppUpdateStatus.copy(
-                        appUpdateState = InstallState(
+                        appUpdateState = InstallState.a(
                             appUpdateInfo.installStatus(),
                             0,
                             activity.packageName
@@ -77,8 +83,6 @@ class InAppUpdateManager(private val activity: Activity, private val forceUpdate
                 }
                 emitter.onNext(currentInAppUpdateStatus)
             }
-
-
         }
     }
 
@@ -89,10 +93,9 @@ class InAppUpdateManager(private val activity: Activity, private val forceUpdate
      * @param updateType set the type of the in app update
      */
     fun startUpdate(@InAppUpdateType updateType: Int = AppUpdateType.FLEXIBLE) {
-        //to be save
-        //refetch the update status before starting the update process
+        // to be saved
+        // refetch the update status before starting the update process
         appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
-
             currentInAppUpdateStatus = currentInAppUpdateStatus.copy(appUpdateInfo = appUpdateInfo)
 
             appUpdateManager.startUpdateFlowForResult(

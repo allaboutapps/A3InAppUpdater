@@ -1,0 +1,20 @@
+# Gradle
+.gradle
+build/
+
+captures
+
+/local.properties
+
+# IntelliJ .idea folder
+.idea/workspace.xml
+.idea/libraries
+.idea/caches
+.idea/tasks.xml
+.idea/modules.xml
+gradle.xml
+*.iml
+
+# General
+.DS_Store
+.externalNativeBuild

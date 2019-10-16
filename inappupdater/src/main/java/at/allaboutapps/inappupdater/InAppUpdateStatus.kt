@@ -8,7 +8,7 @@ import com.google.android.play.core.install.model.UpdateAvailability
 const val NO_UPDATE = -1
 
 /**
- * This class is just a wrapper for AppupdateInfo and InstallState
+ * This class is just a wrapper for [AppUpdateInfo] and [InstallState]
  * Used by InAppUpdateManager
  */
 data class InAppUpdateStatus(
@@ -16,15 +16,14 @@ data class InAppUpdateStatus(
     val appUpdateState: InstallState? = null
 ) {
 
-
     val availableVersionCode: Int
         get() = appUpdateInfo?.availableVersionCode() ?: NO_UPDATE
+
     /**
      * Checks if an update is in progress
      */
     val isUpdateInProgress: Boolean
         get() = appUpdateState != null
-
 
     val isDownloading: Boolean
         get() = appUpdateState?.installStatus() == InstallStatus.DOWNLOADING
@@ -35,7 +34,8 @@ data class InAppUpdateStatus(
     /**
      * Checks if an update is available
      */
-    fun isUpdateAvailable() = appUpdateInfo?.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+    fun isUpdateAvailable() =
+        appUpdateInfo?.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
 
     /**
      * Checks if an update is pending -> downloading/downloaded but not installed
