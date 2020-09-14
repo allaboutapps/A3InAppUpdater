@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import at.allaboutapps.inappupdater.InAppUpdateManager
 import at.allaboutapps.inappupdater.InAppUpdateStatus
-import io.reactivex.disposables.Disposables
+import io.reactivex.rxjava3.disposables.Disposable
 
 class ForceUpdateDemoActivity : AppCompatActivity() {
 
@@ -15,7 +15,7 @@ class ForceUpdateDemoActivity : AppCompatActivity() {
     }
 
     private lateinit var inAppUpdateManager: InAppUpdateManager
-    private var inAppUpdateStatusDisposable = Disposables.empty()
+    private var inAppUpdateStatusDisposable = Disposable.empty()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

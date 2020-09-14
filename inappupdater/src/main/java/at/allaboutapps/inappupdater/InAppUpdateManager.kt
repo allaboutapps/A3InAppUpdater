@@ -9,8 +9,8 @@ import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
-import io.reactivex.Observable
-import io.reactivex.disposables.Disposables
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.Disposable
 
 /**
  * InAppUpdateManager handles the in app update process
@@ -55,7 +55,7 @@ class InAppUpdateManager(
             appUpdateManager.registerListener(updateStateListener)
 
             // unregister listener on dispose
-            emitter.setDisposable(Disposables.fromAction {
+            emitter.setDisposable(Disposable.fromAction {
                 appUpdateManager.unregisterListener(
                     updateStateListener
                 )

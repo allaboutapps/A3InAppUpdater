@@ -7,7 +7,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import at.allaboutapps.inappupdater.InAppUpdateManager
 import at.allaboutapps.inappupdater.InAppUpdateStatus
-import io.reactivex.disposables.Disposables
+import io.reactivex.rxjava3.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_update_type.*
 
 class UpdateTypeDemoActivity : AppCompatActivity() {
@@ -17,7 +17,7 @@ class UpdateTypeDemoActivity : AppCompatActivity() {
     }
 
     private lateinit var inAppUpdateManager: InAppUpdateManager
-    private var inAppUpdateStatusDisposable = Disposables.empty()
+    private var inAppUpdateStatusDisposable = Disposable.empty()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
