@@ -7,6 +7,7 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.InstallState
 import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.InstallErrorCode
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import io.reactivex.rxjava3.core.Observable
@@ -76,7 +77,9 @@ class InAppUpdateManager(
                     currentInAppUpdateStatus = currentInAppUpdateStatus.copy(
                         appUpdateState = InstallState.a(
                             appUpdateInfo.installStatus(), // installStatus
-                            0, // installErrorCode
+                            appUpdateInfo.bytesDownloaded(), // bytesDownloaded
+                            appUpdateInfo.totalBytesToDownload(), // totalBytesToDownload
+                            InstallErrorCode.NO_ERROR, // installErrorCode
                             activity.packageName // packageName
                         )
                     )
@@ -99,7 +102,7 @@ class InAppUpdateManager(
             currentInAppUpdateStatus = currentInAppUpdateStatus.copy(appUpdateInfo = appUpdateInfo)
 
             appUpdateManager.startUpdateFlowForResult(
-                currentInAppUpdateStatus.appUpdateInfo,
+                appUpdateInfo,
                 updateType,
                 activity,
                 REQUEST_CODE_IN_APP_UPDATE
