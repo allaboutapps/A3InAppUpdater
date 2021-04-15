@@ -1,6 +1,6 @@
 # A3InAppUpdater
 
-[![Build Status](https://travis-ci.org/allaboutapps/InAppUpdater.svg?branch=master)](https://travis-ci.org/allaboutapps/InAppUpdater)
+[![Build Status](https://travis-ci.org/allaboutapps/A3InAppUpdater.svg?branch=master)](https://travis-ci.org/allaboutapps/A3InAppUpdater)
 [ ![Download](https://api.bintray.com/packages/allaboutapps/A3-Android/at.allaboutapps.inappupdater.a3inappupdater/images/download.svg) ](https://bintray.com/allaboutapps/A3-Android/at.allaboutapps.inappupdater.a3inappupdater/_latestVersion)
 
 
