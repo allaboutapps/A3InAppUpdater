@@ -1,6 +1,6 @@
 plugins {
-    id "com.jfrog.bintray" version "1.8.1"
-    id 'digital.wup.android-maven-publish' version '3.6.2'
+    id "com.jfrog.bintray" version "1.8.5"
+    id 'maven-publish'
 }
 
 
@@ -10,7 +10,7 @@ version = '1.2.1'
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'org.jetbrains.dokka-android'
+apply plugin: 'org.jetbrains.dokka'
 
 android {
     compileSdkVersion 30
@@ -22,7 +22,7 @@ android {
         versionName "1.0"
 
         // the name of the artifact
-        archivesBaseName = 'a3inappupdater' // e.g. a3webview
+        archivesBaseName = 'a3inappupdater'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -70,25 +70,29 @@ bintray {
     publications = ['mavenAar']
 }
 
-publishing {
-    publications {
-        mavenAar(MavenPublication) {
-            from components.android
-            pom {
-                name = 'InAppUpdater'
-                description = 'Android library to simplify In App Update process'
-                url = 'https://github.com/allaboutapps/InAppUpdater'
-                licenses {
-                    license {
-                        name = 'MIT License'
-                        url = 'http://www.opensource.org/licenses/mit-license.php'
+afterEvaluate {
+    publishing {
+        publications {
+            mavenAar(MavenPublication) {
+                from components.release
+                artifact generateJavadocsJar
+                artifact generateSourcesJar
+                pom {
+                    name = 'InAppUpdater'
+                    description = 'Android library to simplify In App Update process'
+                    url = 'https://github.com/allaboutapps/InAppUpdater'
+                    licenses {
+                        license {
+                            name = 'MIT License'
+                            url = 'http://www.opensource.org/licenses/mit-license.php'
+                        }
                     }
-                }
-                developers {
-                    developer {
-                        id = 'MAG'
-                        name = 'Markus Gursch'
-                        email = 'markus.gursch@allaboutapps.at'
+                    developers {
+                        developer {
+                            id = 'MAG'
+                            name = 'Markus Gursch'
+                            email = 'markus.gursch@allaboutapps.at'
+                        }
                     }
                 }
             }
@@ -100,14 +104,9 @@ task javadoc(type: Javadoc) {
     excludes = ['**/*.kt'] // Exclude all kotlin files from javadoc file.
 }
 
-dokka {
-    outputFormat = 'html'
-    outputDirectory = javadoc.destinationDir
-}
-
-task generateJavadocsJar(type: Jar, dependsOn: dokka) {
+task generateJavadocsJar(type: Jar, dependsOn: dokkaJavadoc) {
     classifier = 'javadoc'
-    from dokka.outputDirectory
+    from dokkaJavadoc.outputDirectory
 }
 
 task generateSourcesJar(type: Jar) {
@@ -119,10 +118,6 @@ task generateJavadocs(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath()
             .join(File.pathSeparator))
-}
-
-artifacts {
-    archives generateSourcesJar, generateJavadocsJar
 }
 
 android {
@@ -144,5 +139,3 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
-
-apply plugin: 'digital.wup.android-maven-publish'
