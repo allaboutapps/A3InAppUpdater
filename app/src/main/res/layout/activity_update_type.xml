@@ -128,7 +128,7 @@
 
 
         <Button
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:text="Update now"
             android:visibility="gone"
             tools:visibility="visible"
@@ -183,7 +183,7 @@
             android:layout_height="wrap_content" />
 
         <Button
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:text="Complete update"
             android:id="@+id/btRestart"
             android:layout_gravity="center_horizontal"
