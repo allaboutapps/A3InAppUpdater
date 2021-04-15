@@ -75,9 +75,9 @@ class InAppUpdateManager(
                     //set state if app gets reopened with an update in progress
                     currentInAppUpdateStatus = currentInAppUpdateStatus.copy(
                         appUpdateState = InstallState.a(
-                            appUpdateInfo.installStatus(),
-                            0,
-                            activity.packageName
+                            appUpdateInfo.installStatus(), // installStatus
+                            0, // installErrorCode
+                            activity.packageName // packageName
                         )
                     )
                 }
@@ -92,7 +92,7 @@ class InAppUpdateManager(
      *
      * @param updateType set the type of the in app update
      */
-    fun startUpdate(@InAppUpdateType updateType: Int = AppUpdateType.FLEXIBLE) {
+    fun startUpdate(@InAppUpdateType updateType: Int = UPDATE_TYPE_FLEXIBLE) {
         // to be saved
         // refetch the update status before starting the update process
         appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
