@@ -4,7 +4,7 @@
 [ ![Download](https://api.bintray.com/packages/allaboutapps/A3-Android/at.allaboutapps.inappupdater.a3inappupdater/images/download.svg) ](https://bintray.com/allaboutapps/A3-Android/at.allaboutapps.inappupdater.a3inappupdater/_latestVersion)
 
 
-![all about apps](https://www.allaboutapps.at/wp-content/uploads/2017/06/aaa-Logo-black-646x165.png "all about apps")
+![all about apps](https://allaboutapps.at/wp-content/uploads/2019/11/aaa-logo-dark@2x.png "all about apps")
 
 ###### Looking for a job as android developer located in vienna? [Just contact us](https://www.allaboutapps.at/jobs/android-app-entwickler/)
 

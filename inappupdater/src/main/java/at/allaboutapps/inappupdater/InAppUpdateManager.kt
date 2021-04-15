@@ -7,6 +7,7 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.InstallState
 import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.InstallErrorCode
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import io.reactivex.rxjava3.core.Observable
@@ -75,9 +76,11 @@ class InAppUpdateManager(
                     //set state if app gets reopened with an update in progress
                     currentInAppUpdateStatus = currentInAppUpdateStatus.copy(
                         appUpdateState = InstallState.a(
-                            appUpdateInfo.installStatus(),
-                            0,
-                            activity.packageName
+                            appUpdateInfo.installStatus(), // installStatus
+                            appUpdateInfo.bytesDownloaded(), // bytesDownloaded
+                            appUpdateInfo.totalBytesToDownload(), // totalBytesToDownload
+                            InstallErrorCode.NO_ERROR, // installErrorCode
+                            activity.packageName // packageName
                         )
                     )
                 }
@@ -92,14 +95,14 @@ class InAppUpdateManager(
      *
      * @param updateType set the type of the in app update
      */
-    fun startUpdate(@InAppUpdateType updateType: Int = AppUpdateType.FLEXIBLE) {
+    fun startUpdate(@InAppUpdateType updateType: Int = UPDATE_TYPE_FLEXIBLE) {
         // to be saved
         // refetch the update status before starting the update process
         appUpdateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
             currentInAppUpdateStatus = currentInAppUpdateStatus.copy(appUpdateInfo = appUpdateInfo)
 
             appUpdateManager.startUpdateFlowForResult(
-                currentInAppUpdateStatus.appUpdateInfo,
+                appUpdateInfo,
                 updateType,
                 activity,
                 REQUEST_CODE_IN_APP_UPDATE
